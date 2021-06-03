@@ -19,10 +19,12 @@ adv = ["quickly", "carefully", "brilliantly"]
     <prep>        -->  of | at | with
 '''
 
-input = "mean cow saw carefully green alice with book".split()
+# input = "mean cow saw carefully green alice with book".split()
+input = "mean green".split()
 input_idx = 0
 
-nt = input[input_idx]
+nt = "mean"
+# ct = input[input_idx]
 output = ""
 
 
@@ -30,7 +32,8 @@ def lexical():
     global input_idx
     global nt
     input_idx += 1
-    nt = input[input_idx]
+    if(input_idx < len(input)):
+        nt = input[input_idx]
 
 # def peek():
 
@@ -59,11 +62,15 @@ def parseObj():
 
 
 def adjPhrase():
+    global nt
+    if (nt in adj):
+        parseAdj()
+        adjPhrase()
+    else:
+        return
+
     # check nt
     # if adj
-    parseAdj()
-    # adjPhrase()
-    # else return
 
 
 def parseAdj():
@@ -74,3 +81,6 @@ def parseAdj():
         lexical()
 
     return
+
+
+adjPhrase()
