@@ -19,68 +19,142 @@ adv = ["quickly", "carefully", "brilliantly"]
     <prep>        -->  of | at | with
 '''
 
-# input = "mean cow saw carefully green alice with book".split()
-input = "mean green".split()
+input = "mean cow saw carefully green alice with book".split()
+# input = "alice found mean green book".split()
+# input = "alice book found".split()
 input_idx = 0
-
-nt = "mean"
-# ct = input[input_idx]
+nt = input[0]
 output = ""
+invalid_token = False
+invalid_s = False
+nt_none = False
 
 
 def lexical():
     global input_idx
     global nt
+    global invalid_token
     input_idx += 1
     if(input_idx < len(input)):
+        if ((nt not in adj) and (nt not in verb) and (nt not in noun) and (nt not in adv) and (nt not in prep)):
+            print(nt)
+            invalid_token = True
         nt = input[input_idx]
+    else:
+        nt = None
 
+
+def isToken(t):
+
+    if ((t not in adj) and (t not in verb) and (t not in noun) and (t not in adv) and (t not in prep)):
+        return False
+    return True
 # def peek():
 
 
 def parseSentence():
-    s = parseSub()
-    v = parseVp()
-    o = parseObj()
+    global nt
+    global output
+    output += "(("
+    nounPhrase()
+    output += ")"
 
-    print(output)
+    verbPhrase()
+
+    output += "("
+    nounPhrase()
+    output += "))"
+
+    if (invalid_token):
+        print("invalid token")
+    else:
+        print(output)
 
 
-def parseSub():
-    pass
-
-
-def parseVp():
-    pass
-
-
-def parseObj():
-    pass
-
-# def nounPhrase():
-#     if nt
+def verbPhrase():
+    global nt
+    global output
+    output += "("
+    if nt in verb:
+        output += '"' + nt + '"'
+        lexical()
+    if nt in adv:
+        output += '"' + nt + '"'
+        lexical()
+    output += ")"
 
 
 def adjPhrase():
     global nt
+    global output
+    global invalid_token
+    global invalid_s
     if (nt in adj):
-        parseAdj()
+        output += "("
+        parse()
         adjPhrase()
-    else:
+        output += ")"
+    elif isToken(nt):
+        invalid_token = True
         return
+    elif nt in noun:
+        return
+    else:
+        invalid_s = True
 
-    # check nt
-    # if adj
+
+def parse():
+    global output
+    global nt
+    # if (nt in adj):
+    output += '"' + nt + '"'
+    lexical()
 
 
 def parseAdj():
     global output
     global nt
-    if (nt in adj):
-        output += '("' + nt + '")'
-        lexical()
+    # if (nt in adj):
+    output += '"' + nt + '"'
+    lexical()
+    # else:
+    #     print("invalid sentence")
 
-    return
+
+def prepPhrase():
+    global nt
+    global output
+    if (nt in prep):
+        output += "("
+        parse()
+        nounPhrase()
+        output += ")"
 
 
-adjPhrase()
+def parsePrep():
+    global output
+    global nt
+    # if (nt in prep):
+    output += '"' + nt + '"'
+    lexical()
+    # else:
+    #     print("invalid sentence")
+
+
+def nounPhrase():
+    global nt
+    global output
+    # if nt:
+    output += "("
+    if(nt in adj):
+        adjPhrase()
+    if(nt in noun):
+        parse()
+    if(nt in prep):
+        prepPhrase()
+    output += ")"
+
+
+parseSentence()
+# adjPhrase()
+# print(f"{output}")
