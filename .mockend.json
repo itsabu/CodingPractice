@@ -1,7 +1,7 @@
 {
   "Post": {
-    "cover": {
-      "regexp": "https://picsum\\.photos/seed/[0-9]{5}/1920/270"
+    "path": {
+      "regexp": "([a-z_-s0-9.]+)(/[w]+)*(.[a-z]{0,3})"
     },
     "title": {
       "regexp": "Branch [A-Z]"
