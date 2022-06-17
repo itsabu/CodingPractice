@@ -1,7 +1,7 @@
 {
   "Post": {
     "path": {
-      "regexp": "[a-z]+"
+      "regexp": "[a-z]"
     },
     "title": {
       "regexp": "Branch [A-Z]"
