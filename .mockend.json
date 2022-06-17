@@ -1,7 +1,7 @@
 {
   "Post": {
     "path": {
-      "regexp": "[a-z]+(/[w]+)*"
+      "regexp": "[a-z]+"
     },
     "title": {
       "regexp": "Branch [A-Z]"
@@ -13,11 +13,7 @@
       }
     },
     "tag": {
-      "string": [
-        "one",
-        "two",
-        "three"
-      ]
+      "string": ["one", "two", "three"]
     },
     "isDraft": {
       "boolean": {}
